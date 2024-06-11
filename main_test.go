@@ -44,6 +44,10 @@ func TestDecode(t *testing.T) {
 		if !reflect.DeepEqual(expected, got) {
 			t.Errorf("Failed to decode packet: got %+v, expected %+v", got, expected)
 		}
+
+		d, _ := got.Encode()
+		t.Errorf("%+v", d)
+		t.Errorf("%+v", data)
 	})
 
 	t.Run("bit more special characters", func(t *testing.T) {

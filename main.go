@@ -76,10 +76,15 @@ type Packet struct {
 	Body string // null terminated x2 (x00)
 }
 
-//func (p *Packet) Encode() ([]byte, error) {
-//	data := []byte{byte(p.Size), byte(p.ID), byte(p.Ptype)}
-//	return append(data, p.Body...), nil
-//}
+func (p *Packet) Encode() ([]byte, error) {
+	buf := bytes.NewBuffer(make([]byte, 0, p.Size))
+
+	binary.Write(buf, binary.LittleEndian, p.Size)
+	binary.Write(buf, binary.LittleEndian, p.ID)
+	binary.Write(buf, binary.LittleEndian, p.Type)
+
+	return []byte{}, nil
+}
 
 func (p *Packet) Decode(data []byte) error {
 	buf := bytes.NewBuffer(data)
